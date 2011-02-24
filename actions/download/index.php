@@ -72,7 +72,7 @@ function user_download_ods($fields) {
     global $CFG, $SESSION;
 
     require_once("$CFG->libdir/odslib.class.php");
-    require_once($CFG->dirroot.'/report/advuserbulk/profile/lib.php');
+    require_once($CFG->dirroot.'/user/profile/lib.php');
 
     $filename = clean_filename(get_string('users').'.ods');
 
@@ -110,7 +110,7 @@ function user_download_xls($fields) {
     global $CFG, $SESSION;
 
     require_once("$CFG->libdir/excellib.class.php");
-    require_once($CFG->dirroot.'/report/advuserbulk/profile/lib.php');
+    require_once($CFG->dirroot.'/user/profile/lib.php');
 
     $filename = clean_filename(get_string('users').'.xls');
 
@@ -147,7 +147,7 @@ function user_download_xls($fields) {
 function user_download_csv($fields) {
     global $CFG, $SESSION;
 
-    require_once($CFG->dirroot.'/report/advuserbulk/profile/lib.php');
+    require_once($CFG->dirroot.'/user/profile/lib.php');
 
     $filename = clean_filename(get_string('users').'.csv');
 
