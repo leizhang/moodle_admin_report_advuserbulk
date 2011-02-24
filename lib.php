@@ -23,7 +23,7 @@ function add_selection_all($ufiltering) {
 }
 
 function get_selection_data($ufiltering) {
-    global $SESSION;
+    global $CFG, $SESSION;
 
     // get the SQL filter
     $guest = get_guest();
@@ -34,6 +34,11 @@ function get_selection_data($ufiltering) {
     $scount = count($SESSION->bulk_users);
 
     $userlist = array('acount'=>$acount, 'scount'=>$scount, 'ausers'=>false, 'susers'=>false, 'total'=>$total);
+    
+    $sqlfullname = sql_fullname();
+    if ($CFG->fullnamedisplay == 'lastname firstname') {
+        $sqlfullname = sql_fullname('lastname', 'firstname');
+    }
 
     if ($scount) {
         if ($scount < MAX_BULK_USERS) {
@@ -42,11 +47,11 @@ function get_selection_data($ufiltering) {
             $bulkusers = array_slice($SESSION->bulk_users, 0, MAX_BULK_USERS, true);
             $in = implode(',', $bulkusers);
         }
-        $userlist['susers'] = get_records_select_menu('user', "id IN ($in)", 'fullname', 'id,'.sql_fullname().' AS fullname');
+        $userlist['susers'] = get_records_select_menu('user', "id IN ($in)", 'fullname', 'id,'.$sqlfullname.' AS fullname');
         $sqlwhere .= " AND id NOT IN ($in)";
     }
 
-    $userlist['ausers'] = get_records_select_menu('user', $sqlwhere, 'fullname', 'id,'.sql_fullname().' AS fullname', 0, MAX_BULK_USERS);
+    $userlist['ausers'] = get_records_select_menu('user', $sqlwhere, 'fullname', 'id,'.$sqlfullname.' AS fullname', 0, MAX_BULK_USERS);
     
     return $userlist;
 }
